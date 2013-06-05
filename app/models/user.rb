@@ -12,6 +12,26 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(email, password)
-   
+    @user = User.find_by_email(email)
+    if @user
+      if @user.password == password
+        return @user
+      end
+    end
+    return nil
   end
 end
+
+
+
+__END__
+
+  def login
+    
+    
+      session[:user_id] = @user.id
+      redirect "/login/#{@user.id}"
+    else
+      redirect '/'
+    end
+  end
